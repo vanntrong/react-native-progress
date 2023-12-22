@@ -8,7 +8,7 @@ on:
 jobs:
   publish:
     name: Release new version
-    if: github.repository_owner == 'oblador'
+    if: github.repository_owner == 'vanntrong'
     runs-on: ubuntu-latest
     environment: Deploy
     permissions:
