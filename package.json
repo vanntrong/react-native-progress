@@ -1,5 +1,5 @@
 {
-  "name": "react-native-progress",
+  "name": "@vanntrong/react-native-progress",
   "version": "5.0.1",
   "description": "Progress indicators and spinners for React Native using ReactART",
   "main": "index.js",
