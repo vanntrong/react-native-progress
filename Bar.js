@@ -25,6 +25,7 @@ export default class ProgressBar extends Component {
     useNativeDriver: PropTypes.bool,
     animationConfig: PropTypes.object,
     animationType: PropTypes.oneOf(['decay', 'timing', 'spring']),
+    innerRounded: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -40,6 +41,7 @@ export default class ProgressBar extends Component {
     useNativeDriver: false,
     animationConfig: { bounciness: 0 },
     animationType: 'spring',
+    innerRounded: false,
   };
 
   constructor(props) {
@@ -127,6 +129,7 @@ export default class ProgressBar extends Component {
       style,
       unfilledColor,
       width,
+      innerRounded,
       ...restProps
     } = this.props;
 
@@ -142,6 +145,15 @@ export default class ProgressBar extends Component {
     const progressStyle = {
       backgroundColor: color,
       height,
+      ...(innerRounded
+        ? {
+            borderRadius,
+            width: this.state.progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0.0001, innerWidth],
+            }),
+          }
+        : {}),
       transform: [
         {
           translateX: this.state.animationValue.interpolate({
@@ -149,19 +161,23 @@ export default class ProgressBar extends Component {
             outputRange: [innerWidth * -INDETERMINATE_WIDTH_FACTOR, innerWidth],
           }),
         },
-        {
-          translateX: this.state.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [innerWidth / (I18nManager.isRTL ? 2 : -2), 0],
-          }),
-        },
-        {
-          // Interpolation a temp workaround for https://github.com/facebook/react-native/issues/6278
-          scaleX: this.state.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0.0001, 1],
-          }),
-        },
+        ...(innerRounded
+          ? []
+          : [
+              {
+                translateX: this.state.progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [innerWidth / (I18nManager.isRTL ? 2 : -2), 0],
+                }),
+              },
+              {
+                // Interpolation a temp workaround for https://github.com/facebook/react-native/issues/6278
+                scaleX: this.state.progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0.0001, 1],
+                }),
+              },
+            ]),
       ],
     };
 
