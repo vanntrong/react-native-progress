@@ -53,7 +53,7 @@ declare module 'react-native-progress' {
      * @memberof DefaultPropTypes
      * @default rgba(0, 122, 255, 1)
      */
-     color?: string;
+    color?: string;
 
     /**
      * Color of the remaining progress.
@@ -144,6 +144,12 @@ declare module 'react-native-progress' {
      * @default spring
      */
     animationType?: 'decay' | 'timing' | 'spring';
+
+    /* The `innerRounded?:boolean` property is an optional property in the `BarPropTypes` interface. It
+    specifies whether the inner corners of the progress bar should be rounded or not. If
+    `innerRounded` is set to `true`, the inner corners will be rounded. If it is set to `false` or
+    not provided, the inner corners will not be rounded. */
+    innerRounded?: boolean;
   }
 
   /**
@@ -241,8 +247,8 @@ declare module 'react-native-progress' {
      * @memberof CirclePropTypes
      * @default 0.9
      */
-     endAngle?: number;
-    }
+    endAngle?: number;
+  }
 
   /**
    * Properties for `PiePropTypes` components
@@ -261,7 +267,7 @@ declare module 'react-native-progress' {
      */
     size?: number;
   }
-  
+
   /**
    * Properties for `CircleSnailPropTypes` components
    *
@@ -269,7 +275,8 @@ declare module 'react-native-progress' {
    * @interface CircleSnailPropTypes
    * @extends {DefaultPropTypes}
    */
-  export interface CircleSnailPropTypes extends Omit<DefaultPropTypes, 'color'> {
+  export interface CircleSnailPropTypes
+    extends Omit<DefaultPropTypes, 'color'> {
     /**
      * If the circle should animate.
      *
